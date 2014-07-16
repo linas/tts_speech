@@ -1,7 +1,7 @@
 itf_talk
 ==========
 
-itf_listen uses Google's text-to-speech API to convert a string of textt into several audio files.
+itf_listen uses Google's text-to-speech API to convert a string of text into several audio files.
 
 Because the service is limited to strings of 100 characters, the node will cut up longer texts into pieces, download the separate MP3 files, and then play them in sequence.
 
