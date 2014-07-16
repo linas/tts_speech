@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(ITFTalk)
+project(itf_talk)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -80,7 +80,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES ITFTalk
+#  LIBRARIES itf_talk
 #  CATKIN_DEPENDS rospy std_msgs
 #  DEPENDS system_lib
 )
@@ -97,19 +97,19 @@ include_directories(
 )
 
 ## Declare a cpp library
-# add_library(ITFTalk
-#   src/${PROJECT_NAME}/ITFTalk.cpp
+# add_library(itf_talk
+#   src/${PROJECT_NAME}/itf_talk.cpp
 # )
 
 ## Declare a cpp executable
-# add_executable(ITFTalk_node src/ITFTalk_node.cpp)
+# add_executable(itf_talk_node src/itf_talk_node.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-# add_dependencies(ITFTalk_node ITFTalk_generate_messages_cpp)
+# add_dependencies(itf_talk_node itf_talk_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(ITFTalk_node
+# target_link_libraries(itf_talk_node
 #   ${catkin_LIBRARIES}
 # )
 
@@ -128,7 +128,7 @@ include_directories(
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS ITFTalk ITFTalk_node
+# install(TARGETS itf_talk itf_talk_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -153,7 +153,7 @@ include_directories(
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_ITFTalk.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_itf_talk.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
