@@ -105,9 +105,9 @@ def listener():
     # run simultaenously.
     rospy.init_node('listener', anonymous=True)
 
-    rospy.Subscriber("chatter", String, callback)
+    rospy.Subscriber("itf_talk", String, callback)
 
-    print("Listening for text input on topic 'chatter'")
+    print("Listening for text input on topic 'itf_talk'")
 
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
