@@ -44,7 +44,6 @@ class ITFTalker(Thread):
 
             return combined_text
 
-
     def downloadFile(self, url, fileName):
         fp = open(fileName, "wb")
         curl = pycurl.Curl()
