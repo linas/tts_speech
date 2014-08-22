@@ -7,7 +7,7 @@ Because the service is limited to strings of 100 characters, the node will cut u
 
 Prerequisites
 -------------
-None
+apt-get -y install mplayer python-pycurl libcurl3
 
 Usage
 -----
