@@ -1,14 +1,8 @@
 #!/usr/bin/env python
 
 import rospy
-import urllib, pycurl, os
+import urllib, pycurl
 from threading import Thread
-import sys
-import argparse
-import re
-import urllib2
-import time
-from collections import namedtuple
 from std_msgs.msg import String
 import subprocess
 
