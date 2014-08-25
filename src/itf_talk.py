@@ -8,6 +8,7 @@ import subprocess
 
 class ITFTalker(Thread):
     NODE_NAME = 'itf_talker'
+    pub = rospy.Publisher('itf_next_sentence', String, queue_size=1)
 
     def __init__(self):
         Thread.__init__(self)
@@ -69,6 +70,7 @@ class ITFTalker(Thread):
         for index, section in enumerate(phraseSections):
             print 'Calling mplayer with parameter ' + 'tts' + str(index).zfill(index) + '.mp3'
             subprocess.call(['mplayer', 'tts' + str(index).zfill(index) + '.mp3'])
+            ITFTalker.pub.publish("Google Voice completed.")
         #os.system("mplayer tts " + str(index).zfill(index) + ".mp3 -af extrastereo=0 &")
 
     #speakSpeechFromText("Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.")
