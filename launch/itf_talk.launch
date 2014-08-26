@@ -1,0 +1,3 @@
+ <launch>
+   <node pkg="itf_talk" type="itf_talk.py" name="itf_talk" output="screen"/>
+</launch>

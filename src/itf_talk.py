@@ -76,7 +76,6 @@ class ITFTalker(Thread):
     #speakSpeechFromText("Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.")
 
     def callback(self, data):
-        print("YO I HEARD " + str(data.data) + "!")
         rospy.loginfo(rospy.get_caller_id()+"I heard %s",data.data)
         self.speakSpeechFromText(data.data)
 
