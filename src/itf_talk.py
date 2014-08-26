@@ -85,7 +85,7 @@ if __name__ == '__main__':
     talker = ITFTalker()
 
     talker.start()
-    rospy.loginfo("{0} started, listening for text input to parrot on topic itf_listen...".format(ITFTalker.NODE_NAME))
+    rospy.loginfo("{0} started, listening for text input on topic itf_talk...".format(ITFTalker.NODE_NAME))
 
     rospy.spin()
 
