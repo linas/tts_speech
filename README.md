@@ -9,6 +9,10 @@ Prerequisites
 -------------
 apt-get -y install mplayer python-pycurl libcurl3
 
+New pre-reqs after adding lip-synch support:
+
+sudo apt-get install libavbin-dev libavbin0
+
 Usage
 -----
 Clone into your catkin workspace, to run:
