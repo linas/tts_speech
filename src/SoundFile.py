@@ -50,14 +50,14 @@ class SoundFile():
 
   def __init__(self, filename):
     # Get full filepath (relative to the 'res' folder)
-    dirname, _ = os.path.split(os.path.abspath(__file__))
-    filepath = os.path.join(dirname, filename)
+    #dirname, _ = os.path.split(os.path.abspath(__file__))
+    #filepath = os.path.join(dirname, filename)
     
     # Load file to pyglet, for playing.
-    gletsource = pyglet.media.load(filepath, streaming=False)
+    gletsource = pyglet.media.load(filename, streaming=False)
     self.gletplayer = pyglet.media.Player()
     self.gletplayer.queue(gletsource)
     self.gletplayer.set_handler("on_eos", self.stop)
 
     # Load file to pydub, for getting the current power (volume) in the sound file.
-    self.dubsegment = pydub.AudioSegment.from_mp3(filepath)
+    self.dubsegment = pydub.AudioSegment.from_mp3(filename)
