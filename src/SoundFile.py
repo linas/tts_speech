@@ -7,13 +7,13 @@ class SoundFile():
 
   # Time offset in milliseconds used to synchronize jaw with the sound.
   # E.g. 240 means jaw will move 240ms ahead of the sound than default.
-  dub_offset = 240
+  dub_offset = 140
 
   # Number of miliseconds to calculate the root mean squared of the waveform from.
-  dub_window = 20
+  dub_window = 10
 
   # on_playmore() will be called every this seconds, when the file is playing.
-  callback_interval = 0.1
+  callback_interval = 0.01
 
   is_playing = False
 

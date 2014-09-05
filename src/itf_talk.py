@@ -15,7 +15,7 @@ class ITFTalker(Thread):
     pub = rospy.Publisher('itf_next_sentence', String, queue_size=1)
     pub_speech_strength = rospy.Publisher('speech_strength', Float32, queue_size=1)
     soundfile = None
-    rms_params = {"scale": 1.0/5000, "min": 0.3, "max": 0.7}
+    rms_params = {"scale": 1.0/5000, "min": 0.0, "max": 1.0}
     gletplayer = None
 
     def __init__(self):
@@ -101,7 +101,7 @@ class ITFTalker(Thread):
 
             self.play(fileName)
             ITFTalker.pub.publish("Google Voice completed.")
-
+	rospy.loginfo('helllooooooooooooooooooooooooooo')
         self.pub_speech_strength.publish(0)
 
         #os.system("mplayer tts " + str(index).zfill(index) + ".mp3 -af extrastereo=0 &")
