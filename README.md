@@ -11,7 +11,8 @@ apt-get -y install mplayer python-pycurl libcurl3
 
 New pre-reqs after adding lip-synch support:
 
-sudo apt-get install libavbin-dev libavbin0
+sudo apt-get install libavbin-dev libavbin0 python-pyglet libav-tools
+pip install pydub
 
 Usage
 -----
