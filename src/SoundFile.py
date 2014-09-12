@@ -36,6 +36,7 @@ class SoundFile():
         self.timer.start()
 
     def play(self):
+        self.is_playing = True
         self.gletplayer.play()
         self.hit()
 
@@ -47,6 +48,8 @@ class SoundFile():
         self.gletplayer.seek(0)
         self.timer.cancel()
         self.on_playmore(0)
+        self.is_playing = False
+
 
     def __init__(self, filename):
         # Get full filepath (relative to the 'res' folder)

@@ -48,10 +48,11 @@ class ITFTalker(Thread):
                             lastSpace = -1
                         lastSpace -= 1
 
-                    combined_text.append(section)
+                    combined_text.append(section.strip())
 
+                combined_text.append(input_text.strip())
             else:
-                combined_text.append(input_text)
+                combined_text.append(input_text.strip())
 
             return combined_text
 
@@ -102,7 +103,7 @@ class ITFTalker(Thread):
 
             self.play(fileName)
 
-            while self.soundfile:
+            if not (self.soundfile is None):
                 while self.soundfile.is_playing:
                     pass
 
