@@ -7,13 +7,13 @@ Because the service is limited to strings of 100 characters, the node will cut u
 
 Prerequisites
 -------------
-apt-get -y install mplayer python-pycurl libcurl3
+sudo apt-get -y install mplayer python-pycurl libcurl3
 
 New pre-reqs after adding lip-synch support:
 
 sudo apt-get install libavbin-dev libavbin0 python-pyglet libav-tools python-pip
 
-pip install pydub
+sudo pip install pydub
 
 Usage
 -----
