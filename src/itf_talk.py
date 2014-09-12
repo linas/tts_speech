@@ -3,7 +3,7 @@
 import rospy
 import urllib, pycurl
 from threading import Thread
-from std_msgs.msg import String, Float32
+from std_msgs.msg import String, Float32, Bool
 import subprocess
 import math
 import pyglet
@@ -14,6 +14,7 @@ class ITFTalker(Thread):
     NODE_NAME = 'itf_talker'
     pub = rospy.Publisher('itf_next_sentence', String, queue_size=1)
     pub_speech_strength = rospy.Publisher('speech_strength', Float32, queue_size=1)
+    pub_speech_active = rospy.Publisher('speech_active', Bool, queue_size=1)
     soundfile = None
     rms_params = {"scale": 1.0/5000, "min": 0.0, "max": 1.0}
     gletplayer = None
@@ -93,16 +94,23 @@ class ITFTalker(Thread):
         #     self.gletplayer = pyglet.media.Player()
         #     self.gletplayer.queue(gletsource)
         #     self.gletplayer.play()
-
+        ITFTalker.pub_speech_active.publish(True)
 
         for index, section in enumerate(phraseSections):
             fileName = 'tts' + str(index).zfill(index) + '.mp3'
             print 'Calling SoundPlayer with parameter ' + fileName
 
             self.play(fileName)
+
+            while self.soundfile:
+                while self.soundfile.is_playing:
+                    pass
+
             ITFTalker.pub.publish("Google Voice completed.")
-	rospy.loginfo('helllooooooooooooooooooooooooooo')
+
         self.pub_speech_strength.publish(0)
+
+        ITFTalker.pub_speech_active.publish(False)
 
         #os.system("mplayer tts " + str(index).zfill(index) + ".mp3 -af extrastereo=0 &")
 
