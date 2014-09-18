@@ -23,6 +23,7 @@ class ITFTalker(Thread):
         Thread.__init__(self)
         rospy.init_node(ITFTalker.NODE_NAME, log_level=rospy.INFO)
         rospy.Subscriber("itf_talk", String, self.callback)
+        rospy.Subscriber("itf_talk_stop", String, self.callback_stop)
 
         pyglet.clock._get_sleep_time = pyglet.clock.get_sleep_time
         pyglet.clock.get_sleep_time = lambda sleep_idle: pyglet.clock._get_sleep_time(False)
@@ -150,6 +151,9 @@ class ITFTalker(Thread):
     def callback(self, data):
         rospy.loginfo(rospy.get_caller_id()+"I heard %s",data.data)
         self.speakSpeechFromText(data.data)
+
+    def callback_stop(self, data):
+        self.stop()
 
 if __name__ == '__main__':
     rospy.loginfo("Starting {0}...".format(ITFTalker.NODE_NAME))
