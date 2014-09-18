@@ -5,6 +5,7 @@ import urllib, pycurl
 from threading import Thread
 from std_msgs.msg import String, Float32, Bool
 import subprocess
+import pydub
 import math
 import pyglet
 import threading
@@ -85,6 +86,14 @@ class ITFTalker(Thread):
             print "Downloading " + googleSpeechURL + " to " + "tts" + str(index).zfill(index) + ".mp3\n"
             self.downloadFile(googleSpeechURL,"tts" + str(index).zfill(index) + ".mp3")
             print index, section
+
+        totalDuration = 0
+
+        for index, section in enumerate(phraseSections):
+            fileName = 'tts' + str(index).zfill(index) + '.mp3'
+            dubsegment = pydub.AudioSegment.from_mp3(fileName)
+            totalDuration += dubsegment.__len__()
+            dubsegment = None
 
         # for index, section in enumerate(phraseSections):
         #     print 'Calling mplayer with parameter ' + 'tts' + str(index).zfill(index) + '.mp3'
