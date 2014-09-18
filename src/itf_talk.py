@@ -18,6 +18,7 @@ class ITFTalker(Thread):
     soundfile = None
     rms_params = {"scale": 1.0/5000, "min": 0.0, "max": 1.0}
     gletplayer = None
+    stop_request_received = False
 
     def __init__(self):
         Thread.__init__(self)
@@ -99,20 +100,24 @@ class ITFTalker(Thread):
         ITFTalker.pub_speech_active.publish(True)
 
         for index, section in enumerate(phraseSections):
-            fileName = 'tts' + str(index).zfill(index) + '.mp3'
-            print 'Calling SoundPlayer with parameter ' + fileName
+            if (not self.stop_request_received):
+                fileName = 'tts' + str(index).zfill(index) + '.mp3'
+                print 'Calling SoundPlayer with parameter ' + fileName
 
-            self.play(fileName)
+                self.play(fileName)
 
-            if not (self.soundfile is None):
-                while self.soundfile.is_playing:
-                    pass
+                if not (self.soundfile is None):
+                    while self.soundfile.is_playing:
+                        pass
+            else:
+                pass
 
-            ITFTalker.pub.publish("Google Voice completed.")
+        ITFTalker.pub.publish("Google Voice completed.")
 
         self.pub_speech_strength.publish(0)
-
         ITFTalker.pub_speech_active.publish(False)
+
+        self.stop_request_received = False
 
         #os.system("mplayer tts " + str(index).zfill(index) + ".mp3 -af extrastereo=0 &")
 
@@ -153,6 +158,7 @@ class ITFTalker(Thread):
         self.speakSpeechFromText(data.data)
 
     def callback_stop(self, data):
+        self.stop_request_received = True
         self.stop()
 
 if __name__ == '__main__':
