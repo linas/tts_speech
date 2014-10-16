@@ -33,7 +33,7 @@ class ITFTalker(Thread):
         threading.Timer(0.0, pyglet.app.run).start()
         rospy.on_shutdown(pyglet.app.exit)
 
-    def split_text_rec(self, input_text, max_length=45):
+    def split_text_rec(self, input_text, max_length=95):
             """
             Split a string into substrings which are at most max_length.
             """
