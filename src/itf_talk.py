@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
+import os
 import rospy
 import urllib, pycurl
 from threading import Thread
-from std_msgs.msg import String, Float32, Bool
+from std_msgs.msg import String, Float64, Bool
 import subprocess
 import pydub
 import math
@@ -14,17 +15,18 @@ from SoundFile import SoundFile
 class ITFTalker(Thread):
     NODE_NAME = 'itf_talker'
     pub = rospy.Publisher('itf_next_sentence', String, queue_size=1)
-    pub_speech_strength = rospy.Publisher('speech_strength', Float32, queue_size=1)
+    pub_speech_strength = rospy.Publisher('/dmitry/jaw_controller/command', Float64, queue_size=1)
     pub_speech_active = rospy.Publisher('speech_active', Bool, queue_size=1)
     soundfile = None
     rms_params = {"scale": 1.0/5000, "min": 0.0, "max": 1.0}
     gletplayer = None
     stop_request_received = False
+    jaw_inactive = True
 
     def __init__(self):
         Thread.__init__(self)
         rospy.init_node(ITFTalker.NODE_NAME, log_level=rospy.INFO)
-        rospy.Subscriber("itf_talk", String, self.callback)
+        rospy.Subscriber("/chatbot_responses", String, self.callback)
         rospy.Subscriber("itf_talk_stop", String, self.callback_stop)
 
         pyglet.clock._get_sleep_time = pyglet.clock.get_sleep_time
@@ -85,13 +87,15 @@ class ITFTalker(Thread):
             googleSpeechURL = self.getGoogleSpeechURL(section)
             print "Downloading " + googleSpeechURL + " to " + "tts" + str(index).zfill(index) + ".mp3\n"
             self.downloadFile(googleSpeechURL,"tts" + str(index).zfill(index) + ".mp3")
+            fileName =  "tts" + str(index).zfill(index)
+            os.system("ffmpeg -y -i "+fileName+".mp3 "+ fileName+".wav" )
             print index, section
 
         totalDuration = 0
 
         for index, section in enumerate(phraseSections):
-            fileName = 'tts' + str(index).zfill(index) + '.mp3'
-            dubsegment = pydub.AudioSegment.from_mp3(fileName)
+            fileName = 'tts' + str(index).zfill(index) + '.wav'
+            dubsegment = pydub.AudioSegment.from_wav(fileName)
             totalDuration += dubsegment.__len__()
             dubsegment = None
 
@@ -109,9 +113,10 @@ class ITFTalker(Thread):
         ITFTalker.pub_speech_active.publish(True)
 
         for index, section in enumerate(phraseSections):
+            fileName = 'tts' + str(index).zfill(index)
+
+            fileName = fileName + '.wav'
             if (not self.stop_request_received):
-                fileName = 'tts' + str(index).zfill(index) + '.mp3'
-                print 'Calling SoundPlayer with parameter ' + fileName
 
                 self.play(fileName)
 
@@ -142,7 +147,15 @@ class ITFTalker(Thread):
         p = self.rms_params
         jaw_coeff = min(max(math.sqrt(rms * p["scale"]), p["min"]), p["max"])
 
-        self.pub_speech_strength.publish(jaw_coeff)
+        if jaw_coeff > 0:
+            jaw_coeff = jaw_coeff*0.4-0.15;
+            self.pub_speech_strength.publish(jaw_coeff)
+            self.jaw_inactive = False
+        else:
+            if not self.jaw_inactive:
+                self.pub_speech_strength.publish(jaw_coeff)
+                self.jaw_inactive = True
+
 
         # Copy pau expression message stored during handle_face_in(),
         # modify jaw and publish.
@@ -158,6 +171,7 @@ class ITFTalker(Thread):
 
     def play(self, filename):
         self.stop()
+
         self.soundfile = SoundFile(filename)
         self.soundfile.on_playmore = self.hit # Set callback
         self.soundfile.play()
@@ -175,7 +189,7 @@ if __name__ == '__main__':
     talker = ITFTalker()
 
     talker.start()
-    rospy.loginfo("{0} started, listening for text input on topic itf_talk...".format(ITFTalker.NODE_NAME))
+    rospy.loginfo("{0} started, listening for text input on topic chatbot_repsonses...".format(ITFTalker.NODE_NAME))
 
     rospy.spin()
 

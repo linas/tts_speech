@@ -64,4 +64,4 @@ class SoundFile():
         self.gletplayer.set_handler("on_eos", self.stop)
 
         # Load file to pydub, for getting the current power (volume) in the sound file.
-        self.dubsegment = pydub.AudioSegment.from_mp3(filename)
+        self.dubsegment = pydub.AudioSegment.from_wav(filename)
