@@ -26,7 +26,7 @@ class ITFTalker(Thread):
     def __init__(self):
         Thread.__init__(self)
         rospy.init_node(ITFTalker.NODE_NAME, log_level=rospy.INFO)
-        rospy.Subscriber("/chatbot_responses", String, self.callback)
+        rospy.Subscriber("chatbot_responses", String, self.callback)
         rospy.Subscriber("itf_talk_stop", String, self.callback_stop)
 
         pyglet.clock._get_sleep_time = pyglet.clock.get_sleep_time
