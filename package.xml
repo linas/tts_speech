@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>itf_talk</name>
+  <name>tts_speech</name>
   <version>0.0.0</version>
-  <description>The itf_talk package</description>
+  <description>The tts_speech package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
   <!-- Example:  -->
