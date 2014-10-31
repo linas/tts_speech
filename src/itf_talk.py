@@ -88,7 +88,7 @@ class ITFTalker(Thread):
             print "Downloading " + googleSpeechURL + " to " + "tts" + str(index).zfill(index) + ".mp3\n"
             self.downloadFile(googleSpeechURL,"tts" + str(index).zfill(index) + ".mp3")
             fileName =  "tts" + str(index).zfill(index)
-            os.system("ffmpeg -y -i "+fileName+".mp3 "+ fileName+".wav" )
+            os.system("avconv -y -i "+fileName+".mp3 "+ fileName+".wav" )
             print index, section
 
         totalDuration = 0
