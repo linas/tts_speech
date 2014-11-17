@@ -1,3 +1,12 @@
+DO NOT USE IN NEW CODE
+======================
+This is a proprietary fork of https://github.com/geni-labs/itf_talk
+with some hard-coded hacks applied, in order to drive the Dmitry head
+demo. 
+
+This repo is here for historical reasons only.
+
+
 itf_talk
 ==========
 
